@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
-import { View, Text } from 'react-native';
+import { Platform } from 'react-native';
 
 // Import all screens
 import HomeScreen from './src/screens/HomeScreen';
@@ -34,6 +34,11 @@ function TabNavigator() {
         },
         tabBarActiveTintColor: '#8B5CF6',
         tabBarInactiveTintColor: 'gray',
+        tabBarStyle: {
+          height: Platform.OS === 'android' ? 60 : undefined,
+          paddingBottom: Platform.OS === 'android' ? 8 : undefined,
+        },
+        tabBarHideOnKeyboard: true,
       })}
     >
       <Tab.Screen 
@@ -41,7 +46,17 @@ function TabNavigator() {
         component={HomeScreen}
         options={{ headerShown: false }}
       />
-      <Tab.Screen name="Profiles" component={ProfilesScreen} />
+      <Tab.Screen 
+        name="Profiles" 
+        component={ProfilesScreen}
+        options={{
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: Platform.OS === 'android' ? '#8B5CF6' : 'white',
+          },
+          headerTintColor: Platform.OS === 'android' ? 'white' : '#000',
+        }}
+      />
       <Tab.Screen 
         name="Settings" 
         component={SettingsScreen}
@@ -54,7 +69,12 @@ function TabNavigator() {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          animationEnabled: true,
+          animation: Platform.OS === 'android' ? 'slide_from_right' : undefined,
+        }}
+      >
         <Stack.Screen 
           name="Main" 
           component={TabNavigator}
@@ -63,7 +83,10 @@ export default function App() {
         <Stack.Screen 
           name="Chat" 
           component={ChatScreen}
-          options={{ headerShown: false }}
+          options={{ 
+            headerShown: false,
+            animation: Platform.OS === 'android' ? 'slide_from_right' : undefined,
+          }}
         />
         <Stack.Screen 
           name="CreditShop" 
@@ -71,11 +94,12 @@ export default function App() {
           options={{
             headerShown: true,
             headerTitle: 'Buy Credits',
-            presentation: 'modal',
+            presentation: Platform.OS === 'ios' ? 'modal' : 'card',
             headerStyle: {
               backgroundColor: '#000000',
             },
             headerTintColor: '#fff',
+            animation: Platform.OS === 'android' ? 'slide_from_bottom' : undefined,
           }}
         />
       </Stack.Navigator>
