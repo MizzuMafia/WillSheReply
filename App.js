@@ -2,9 +2,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { View, Text } from 'react-native';
+import { View, Text, Platform } from 'react-native';
 
-// Temporary simple screen components
 function HomeScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -51,11 +50,48 @@ export default function App() {
           },
           tabBarActiveTintColor: '#8B5CF6',
           tabBarInactiveTintColor: 'gray',
+          tabBarStyle: {
+            height: Platform.OS === 'android' ? 60 : 50,
+            paddingBottom: Platform.OS === 'android' ? 10 : 0,
+            paddingTop: Platform.OS === 'android' ? 10 : 0,
+            backgroundColor: '#fff',
+            borderTopWidth: 1,
+            borderTopColor: '#e5e5e5',
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+          },
+          headerStyle: {
+            backgroundColor: Platform.OS === 'android' ? '#8B5CF6' : '#fff',
+          },
+          headerTintColor: Platform.OS === 'android' ? '#fff' : '#000',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
         })}
       >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Profiles" component={ProfilesScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen 
+          name="Home" 
+          component={HomeScreen}
+          options={{
+            title: 'Home',
+          }}
+        />
+        <Tab.Screen 
+          name="Profiles" 
+          component={ProfilesScreen}
+          options={{
+            title: 'AI Profiles',
+          }}
+        />
+        <Tab.Screen 
+          name="Settings" 
+          component={SettingsScreen}
+          options={{
+            title: 'Settings',
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
