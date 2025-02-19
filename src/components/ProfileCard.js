@@ -1,5 +1,5 @@
 // src/components/ProfileCard.js
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function ProfileCard({ profile }) {
@@ -9,6 +9,8 @@ export default function ProfileCard({ profile }) {
     <TouchableOpacity 
       className="bg-white rounded-2xl shadow-sm mb-4 overflow-hidden w-[160px] mx-2"
       onPress={() => navigation.navigate('Chat', { profile })}
+      android_ripple={{ color: 'rgba(139, 92, 246, 0.3)' }}
+      activeOpacity={Platform.OS === 'ios' ? 0.7 : 0.9}
     >
       <Image 
         source={{ uri: profile.imageUrl }}
@@ -38,4 +40,3 @@ export default function ProfileCard({ profile }) {
     </TouchableOpacity>
   );
 }
-

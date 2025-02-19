@@ -1,5 +1,5 @@
 // src/components/SettingsItem.js
-import { View, Text, TouchableOpacity, Switch } from 'react-native';
+import { View, Text, TouchableOpacity, Switch, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function SettingsItem({ 
@@ -15,6 +15,9 @@ export default function SettingsItem({
     <TouchableOpacity 
       className="flex-row items-center p-4 bg-white mb-[1px]"
       onPress={onPress}
+      android_ripple={{ color: 'rgba(139, 92, 246, 0.1)' }}
+      activeOpacity={Platform.OS === 'ios' ? 0.7 : 0.9}
+      disabled={type === 'switch'}
     >
       <View className="w-8 h-8 bg-purple-100 rounded-full items-center justify-center">
         <Ionicons name={icon} size={18} color="#8B5CF6" />
@@ -37,9 +40,11 @@ export default function SettingsItem({
           onValueChange={onValueChange}
           trackColor={{ false: '#D1D5DB', true: '#C4B5FD' }}
           thumbColor={value ? '#8B5CF6' : '#9CA3AF'}
+          style={Platform.select({
+            android: { transform: [{ scale: 1.1 }] }
+          })}
         />
       )}
     </TouchableOpacity>
   );
 }
-

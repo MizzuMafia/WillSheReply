@@ -1,5 +1,5 @@
 // src/components/ChatInput.js
-import { View, TextInput, TouchableOpacity } from 'react-native';
+import { View, TextInput, TouchableOpacity, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function ChatInput({ message, setMessage, onSend }) {
@@ -11,10 +11,18 @@ export default function ChatInput({ message, setMessage, onSend }) {
         value={message}
         onChangeText={setMessage}
         multiline
+        style={Platform.select({
+          android: {
+            paddingTop: 8,
+            paddingBottom: 8
+          }
+        })}
       />
       <TouchableOpacity
         className="bg-purple-500 w-10 h-10 rounded-full items-center justify-center"
         onPress={onSend}
+        android_ripple={{ color: 'rgba(255, 255, 255, 0.3)' }}
+        activeOpacity={Platform.OS === 'ios' ? 0.7 : 0.9}
       >
         <Ionicons name="send" size={20} color="white" />
       </TouchableOpacity>

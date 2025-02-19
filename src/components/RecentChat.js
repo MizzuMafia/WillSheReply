@@ -1,5 +1,5 @@
 // src/components/RecentChat.js
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function RecentChat({ chat }) {
@@ -9,6 +9,8 @@ export default function RecentChat({ chat }) {
     <TouchableOpacity
       className="flex-row items-center p-3 bg-white rounded-xl mb-2"
       onPress={() => navigation.navigate('Chat', { profile: chat })}
+      android_ripple={{ color: 'rgba(139, 92, 246, 0.3)' }}
+      activeOpacity={Platform.OS === 'ios' ? 0.7 : 0.9}
     >
       <Image
         source={{ uri: chat.imageUrl }}
@@ -24,6 +26,3 @@ export default function RecentChat({ chat }) {
     </TouchableOpacity>
   );
 }
-
-
-
