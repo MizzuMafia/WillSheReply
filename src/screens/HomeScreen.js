@@ -2,6 +2,8 @@
 import { View, Text, ScrollView, SafeAreaView } from 'react-native';
 import RecentChat from '../components/RecentChat';
 import QuickActions from '../components/QuickActions';
+import CreditBalance from '../components/credits/CreditBalance';
+
 
 // Sample data for recent chats
 const recentChats = [
@@ -32,6 +34,7 @@ export default function HomeScreen() {
           <Text className="text-2xl font-bold text-gray-800">
             Welcome Back 👋
           </Text>
+          <CreditBalance credits={100} />
           <Text className="text-gray-500 mt-1">
             Continue your conversations or start a new one
           </Text>

@@ -3,11 +3,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
+import { View, Text } from 'react-native';
 
+// Import all screens
 import HomeScreen from './src/screens/HomeScreen';
 import ProfilesScreen from './src/screens/ProfilesScreen';
 import ChatScreen from './src/screens/ChatScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
+import CreditShopScreen from './src/screens/credits/CreditShopScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -61,6 +64,19 @@ export default function App() {
           name="Chat" 
           component={ChatScreen}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="CreditShop" 
+          component={CreditShopScreen}
+          options={{
+            headerShown: true,
+            headerTitle: 'Buy Credits',
+            presentation: 'modal',
+            headerStyle: {
+              backgroundColor: '#000000',
+            },
+            headerTintColor: '#fff',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
