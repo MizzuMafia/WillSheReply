@@ -1,10 +1,12 @@
 // src/components/credits/SubscriptionCard.js
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Platform } from 'react-native';
 
 export default function SubscriptionCard({ plan }) {
   return (
     <TouchableOpacity 
       className="bg-gray-800 rounded-xl p-4 mb-3"
+      android_ripple={{ color: 'rgba(139, 92, 246, 0.3)' }}
+      activeOpacity={Platform.OS === 'ios' ? 0.7 : 0.9}
     >
       <View className="flex-row justify-between items-start mb-2">
         <Text className="text-white font-semibold text-lg">
