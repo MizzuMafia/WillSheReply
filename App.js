@@ -3,33 +3,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
-import { View, Text, Platform } from 'react-native';
-import { useEffect } from 'react';
+import { View, Text } from 'react-native';
 
-// Simple screen components for testing
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }}>
-      <Text>Home Screen</Text>
-    </View>
-  );
-}
-
-function ProfilesScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }}>
-      <Text>Profiles Screen</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }}>
-      <Text>Settings Screen</Text>
-    </View>
-  );
-}
+// Import all screens
+import HomeScreen from './src/screens/HomeScreen';
+import ProfilesScreen from './src/screens/ProfilesScreen';
+import ChatScreen from './src/screens/ChatScreen';
+import SettingsScreen from './src/screens/SettingsScreen';
+import CreditShopScreen from './src/screens/credits/CreditShopScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -41,11 +22,11 @@ function TabNavigator() {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === 'HomeTab') {
+          if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'ProfilesTab') {
+          } else if (route.name === 'Profiles') {
             iconName = focused ? 'people' : 'people-outline';
-          } else if (route.name === 'SettingsTab') {
+          } else if (route.name === 'Settings') {
             iconName = focused ? 'settings' : 'settings-outline';
           }
 
@@ -53,41 +34,18 @@ function TabNavigator() {
         },
         tabBarActiveTintColor: '#8B5CF6',
         tabBarInactiveTintColor: 'gray',
-        tabBarStyle: {
-          height: Platform.OS === 'android' ? 60 : 50,
-          paddingBottom: Platform.OS === 'android' ? 10 : 0,
-          paddingTop: Platform.OS === 'android' ? 10 : 0,
-          backgroundColor: '#fff',
-          borderTopWidth: 1,
-          borderTopColor: '#e5e5e5',
-        },
-        headerStyle: {
-          backgroundColor: Platform.OS === 'android' ? '#8B5CF6' : '#fff',
-        },
-        headerTintColor: Platform.OS === 'android' ? '#fff' : '#000',
-        unmountOnBlur: true, // This will unmount the screen when it's not focused
       })}
     >
       <Tab.Screen 
-        name="HomeTab" 
+        name="Home" 
         component={HomeScreen}
-        options={{
-          title: 'Home',
-        }}
+        options={{ headerShown: false }}
       />
+      <Tab.Screen name="Profiles" component={ProfilesScreen} />
       <Tab.Screen 
-        name="ProfilesTab" 
-        component={ProfilesScreen}
-        options={{
-          title: 'Profiles',
-        }}
-      />
-      <Tab.Screen 
-        name="SettingsTab" 
+        name="Settings" 
         component={SettingsScreen}
-        options={{
-          title: 'Settings',
-        }}
+        options={{ headerShown: false }}
       />
     </Tab.Navigator>
   );
@@ -95,17 +53,30 @@ function TabNavigator() {
 
 export default function App() {
   return (
-    <NavigationContainer
-      onStateChange={(state) => {
-        // Log navigation state changes for debugging
-        console.log('New navigation state:', state);
-      }}
-    >
+    <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen 
-          name="MainTabs" 
+          name="Main" 
           component={TabNavigator}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="Chat" 
+          component={ChatScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="CreditShop" 
+          component={CreditShopScreen}
+          options={{
+            headerShown: true,
+            headerTitle: 'Buy Credits',
+            presentation: 'modal',
+            headerStyle: {
+              backgroundColor: '#000000',
+            },
+            headerTintColor: '#fff',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
