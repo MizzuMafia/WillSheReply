@@ -4,15 +4,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Create API service with base URL
 const apiClient = axios.create({
-  baseURL: 'https://your-api.example.com', // Replace with your actual backend URL
-  timeout: 10000
-});
+    baseURL: 'http://localhost:5000',  // Points to localhost:5000 on your computer
+    timeout: 10000
+  });
 
 // Request interceptor to add auth token
 apiClient.interceptors.request.use(
   async (config) => {
     try {
-      const token = await AsyncStorage.getItem('authToken');
+        const token = await AsyncStorage.getItem('userToken');
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }

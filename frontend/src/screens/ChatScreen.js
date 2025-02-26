@@ -45,7 +45,7 @@ export default function ChatScreen({ route }) {
     setIsLoading(true);
 
     try {
-      // Using the new API service instead of direct API calls
+      // Using the API service to communicate through our backend
       const response = await sendChatMessage({
         model: 'grok-2-latest',
         messages: [
@@ -56,15 +56,15 @@ export default function ChatScreen({ route }) {
           { role: 'user', content: message },
         ],
       });
-
+    
       const aiResponse = {
         text: response.choices[0].message.content.trim(),
         timestamp: new Date().toLocaleTimeString(),
         isUser: false
       };
-  
+    
       setMessages(prev => [...prev, aiResponse]);
-    } catch (error) {
+    }catch (error) {
       console.error('Chat API Error:', error);
       
       let errorMessage = 'Failed to get response';

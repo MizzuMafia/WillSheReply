@@ -1,5 +1,10 @@
 {
   "dependencies": {
+    "@expo/vector-icons": "^14.0.4",
+    "@react-native-async-storage/async-storage": "^2.1.1",
+    "@react-navigation/bottom-tabs": "^7.2.0",
+    "@react-navigation/native": "^7.0.14",
+    "@react-navigation/stack": "^7.1.1",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
@@ -10,11 +15,19 @@
     "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.10.2",
+    "nativewind": "^4.1.23",
     "nodemailer": "^6.10.0",
-    "path-browserify": "^1.0.1"
+    "path-browserify": "^1.0.1",
+    "react-native-dotenv": "^3.4.11",
+    "react-native-safe-area-context": "^5.2.0",
+    "react-native-screens": "^4.9.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "@babel/core": "^7.20.0",
+    "autoprefixer": "^10.4.20",
+    "babel-plugin-module-resolver": "^5.0.2",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.3.2"
   },
   "scripts": {
     "start": "node server.js",
