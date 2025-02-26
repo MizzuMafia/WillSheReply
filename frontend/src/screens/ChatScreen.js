@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { View, ScrollView, Image, Text, KeyboardAvoidingView, Platform, Alert, TouchableOpacity, SafeAreaView } from 'react-native';
 import ChatBubble from '../components/ChatBubble';
 import ChatInput from '../components/ChatInput';
+import { sendChatMessage } from '../services/apiService';
 import axios from 'axios';
 import { XAI_API_KEY } from '@env';
 
@@ -31,7 +32,7 @@ export default function ChatScreen({ route }) {
 
   const sendMessage = useCallback(async () => {
     if (!message.trim()) return;
-
+  
     const detectedLanguage = detectLanguage(message);
     const newMessage = {
       text: message,
@@ -44,56 +45,45 @@ export default function ChatScreen({ route }) {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(
-        'https://api.x.ai/v1/chat/completions',
-        {
-          model: 'grok-2-latest',
-          messages: [
-            { 
-              role: 'system', 
-              content: `You are ${profile.name}, a ${profile.age}-year-old female with the personality "${profile.personality}". Your interests are ${profile.interests.join(', ')}. Respond as a girl, naturally and flirtatiously if appropriate, in ${detectedLanguage}. Keep responses engaging, unique, and consistent with your character.` 
-            },
-            { role: 'user', content: message },
-          ],
-        },
-        {
-          headers: {
-            'Authorization': `Bearer ${XAI_API_KEY}`,
-            'Content-Type': 'application/json'
+      // Using the new API service instead of direct API calls
+      const response = await sendChatMessage({
+        model: 'grok-2-latest',
+        messages: [
+          { 
+            role: 'system', 
+            content: `You are ${profile.name}, a ${profile.age}-year-old female with the personality "${profile.personality}". Your interests are ${profile.interests.join(', ')}. Respond as a girl, naturally and flirtatiously if appropriate, in ${detectedLanguage}. Keep responses engaging, unique, and consistent with your character.` 
           },
-          timeout: 10000
-        }
-      );
+          { role: 'user', content: message },
+        ],
+      });
 
       const aiResponse = {
-        text: response.data.choices[0].message.content.trim(),
+        text: response.choices[0].message.content.trim(),
         timestamp: new Date().toLocaleTimeString(),
         isUser: false
       };
-
+  
       setMessages(prev => [...prev, aiResponse]);
     } catch (error) {
-      console.error('xAI API Error:', error.response?.data || error.message);
-      let errorMessage = 'Failed to get response from AI';
+      console.error('Chat API Error:', error);
+      
+      let errorMessage = 'Failed to get response';
       if (error.response) {
         switch (error.response.status) {
           case 401:
-            errorMessage = 'Invalid API key. Please check your credentials.';
+            errorMessage = 'Please log in again to continue.';
+            // Redirect to login or refresh token
             break;
           case 429:
             errorMessage = 'Rate limit exceeded. Try again later.';
             break;
-          case 500:
-            errorMessage = 'xAI server error. Please try again.';
-            break;
           default:
-            errorMessage = `Server returned error ${error.response.status}: ${error.response.data?.message || 'Unknown error'}`;
+            errorMessage = error.response.data?.error || 'Unknown error occurred';
         }
-      } else if (error.code === 'ECONNABORTED') {
-        errorMessage = 'Request timed out. Please try again.';
-      } else {
-        errorMessage = 'Network error. Please check your connection and try again.';
+      } else if (error.request) {
+        errorMessage = 'Network error. Please check your connection.';
       }
+      
       Alert.alert('Error', errorMessage);
     } finally {
       setIsLoading(false);
