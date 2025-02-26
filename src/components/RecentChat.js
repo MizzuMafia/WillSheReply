@@ -1,9 +1,13 @@
 // src/components/RecentChat.js
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import aiProfiles from '../data/aiProfiles';
 
-export default function RecentChat({ chat }) {
+export default function RecentChat({ chatId }) {
   const navigation = useNavigation();
+  const chat = aiProfiles.find(p => p.id === chatId);
+
+  if (!chat) return null;
 
   return (
     <TouchableOpacity
@@ -17,13 +21,10 @@ export default function RecentChat({ chat }) {
       <View className="flex-1 ml-3">
         <Text className="font-semibold text-gray-800">{chat.name}</Text>
         <Text className="text-gray-500 text-sm" numberOfLines={1}>
-          {chat.lastMessage}
+          {chat.lastMessage || 'Ready to chat!'}
         </Text>
       </View>
-      <Text className="text-xs text-gray-400">{chat.time}</Text>
+      <Text className="text-xs text-gray-400">{chat.time || 'Now'}</Text>
     </TouchableOpacity>
   );
 }
-
-
-

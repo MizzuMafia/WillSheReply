@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ai-companion",
-    "slug": "ai-companion",
+    "name": "Will She Reply?",
+    "slug": "will-she-reply",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

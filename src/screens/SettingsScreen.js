@@ -1,4 +1,3 @@
-// src/screens/SettingsScreen.js
 import { useState } from 'react';
 import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, Alert } from 'react-native';
 import SettingsItem from '../components/SettingsItem';
@@ -8,14 +7,20 @@ export default function SettingsScreen() {
   const [darkMode, setDarkMode] = useState(false);
   const [soundEffects, setSoundEffects] = useState(true);
 
+  const theme = {
+    primary: '#FF6B8E',
+    secondary: '#FFD1DC',
+    background: '#F5F5F5',
+    text: '#333333',
+  };
+
   const showLanguageOptions = () => {
     Alert.alert(
       'Select Language',
       'Choose your preferred language',
       [
         { text: 'English', onPress: () => console.log('English selected') },
-        { text: 'Spanish', onPress: () => console.log('Spanish selected') },
-        { text: 'French', onPress: () => console.log('French selected') },
+        { text: 'Hinglish', onPress: () => console.log('Hinglish selected') },
         { text: 'Cancel', style: 'cancel' }
       ]
     );
@@ -24,28 +29,26 @@ export default function SettingsScreen() {
   const showPrivacyPolicy = () => {
     Alert.alert(
       'Privacy Policy',
-      'Our privacy policy details how we handle your data and ensure your privacy.',
+      'Our privacy policy details how we handle your data and ensure your privacy for Will She Reply?.',
       [{ text: 'OK' }]
     );
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-100">
+    <SafeAreaView className="flex-1 bg-[#F5F5F5]">
       <ScrollView>
-        {/* Profile Section */}
         <View className="bg-white p-4 items-center mb-6">
-          <View className="w-20 h-20 bg-purple-100 rounded-full items-center justify-center mb-3">
+          <View className="w-20 h-20 bg-[#FFD1DC] rounded-full items-center justify-center mb-3">
             <Text className="text-2xl">👤</Text>
           </View>
-          <Text className="text-xl font-semibold text-gray-800">User Profile</Text>
+          <Text className="text-xl font-semibold text-[#333333]">User Profile</Text>
           <TouchableOpacity>
-            <Text className="text-purple-600 mt-1">Edit Profile</Text>
+            <Text className="text-[#FF6B8E] mt-1">Edit Profile</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Preferences */}
         <View className="mb-6">
-          <Text className="text-gray-500 text-sm font-medium px-4 mb-2">
+          <Text className="text-[#666666] text-sm font-medium px-4 mb-2">
             PREFERENCES
           </Text>
           <SettingsItem
@@ -79,9 +82,8 @@ export default function SettingsScreen() {
           />
         </View>
 
-        {/* Account */}
         <View className="mb-6">
-          <Text className="text-gray-500 text-sm font-medium px-4 mb-2">
+          <Text className="text-[#666666] text-sm font-medium px-4 mb-2">
             ACCOUNT
           </Text>
           <SettingsItem
@@ -96,9 +98,8 @@ export default function SettingsScreen() {
           />
         </View>
 
-        {/* About */}
         <View className="mb-6">
-          <Text className="text-gray-500 text-sm font-medium px-4 mb-2">
+          <Text className="text-[#666666] text-sm font-medium px-4 mb-2">
             ABOUT
           </Text>
           <SettingsItem
@@ -118,9 +119,8 @@ export default function SettingsScreen() {
           />
         </View>
 
-        {/* Version */}
         <View className="items-center p-4">
-          <Text className="text-gray-400 text-sm">Version 1.0.0</Text>
+          <Text className="text-[#666666] text-sm">Version 1.0.0</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
